@@ -1,9 +1,9 @@
 import sys
 import os
-from urllib import urlretrieve 
+from urllib import urlretrieve
 import tarfile
 import zipfile
-from preprocess import cifar_preprocess, svhn_preprocess, mura_preprocess
+from preprocess import mura_preprocess
 import numpy as np
 
 
