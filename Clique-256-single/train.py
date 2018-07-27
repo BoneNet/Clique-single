@@ -70,11 +70,11 @@ if __name__ == '__main__':
     lr = train_params['initial_lr']
     kp = train_params['keep_prob']
     weight_decay = train_params['weight_decay']
-
-    if os.path.exists(result_dir) == False:
+    total_epoches = train_params['total_epoch']
+    if not os.path.exists(result_dir):
         os.mkdir(result_dir)
 
-    train_data, train_label, test_data, test_label = load_data(dataset, train_params['normalize_type'])
+    train_data, train_label, test_data, test_label = load_data()
 
     image_size = train_data.shape[1:]
     label_num = train_label.shape[-1]
@@ -107,11 +107,11 @@ if __name__ == '__main__':
 
     with tf.Session(config=config, graph=graph) as sess:
         ### start without loading meta graph
-        # sess.run(tf.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())
         ###   load from meta graph (optional)###
-        print 'loading mata data'
-        new_saver = tf.train.import_meta_graph('save/mura_epoch_40.ckpt.meta')
-        new_saver.restore(sess, tf.train.latest_checkpoint('save'))
+        # print 'loading mata data'
+        # new_saver = tf.train.import_meta_graph('save/mura_epoch_40.ckpt.meta')
+        # new_saver.restore(sess, tf.train.latest_checkpoint('save'))
         count_params()
         ###   train batch data   ###
 

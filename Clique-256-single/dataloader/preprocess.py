@@ -26,9 +26,9 @@ def mura_preprocess(train_path):
     valid_data_list = []
     valid_labels = []
 
-    for i in range(len(train_img_paths)):
+    for i in range(len(train_img_paths)/100):
         patient_dir = os.path.join("dataloader", train_img_paths[i])
-        msg = "Loading: %s (%d/%d)" % (patient_dir, i + 1, len(train_img_paths))
+        msg = "\r Loading: %s (%d/%d)    " % (patient_dir, i + 1, len(train_img_paths))
         sys.stdout.write(msg)
         sys.stdout.flush()
         for f in glob.glob(patient_dir + "*"):
@@ -51,16 +51,15 @@ def mura_preprocess(train_path):
             train_labels.append(lst)
     train_data = np.asarray(train_data_list)
 
-    for i in range(len(valid_img_paths)):
+    for i in range(len(valid_img_paths)/10):
         patient_dir = os.path.join("dataloader", valid_img_paths[i])
-        msg = "Loading: %s (%d/%d)" % (patient_dir, i + 1, len(valid_img_paths))
+        msg = "\r Loading: %s (%d/%d)     " % (patient_dir, i + 1, len(valid_img_paths))
         sys.stdout.write(msg)
         sys.stdout.flush()
         for f in glob.glob(patient_dir + "*"):
             valid_data_patient = []
             valid_img = png.read_png_int(f)
             if train_img.shape != (512, 512):
-                print "loading: %s %d/%d" % (f, i, len(valid_img_paths))
                 if len(valid_img.shape) > 2:
                     valid_img = valid_img[:, :, 1]
                 l, w = valid_img.shape
