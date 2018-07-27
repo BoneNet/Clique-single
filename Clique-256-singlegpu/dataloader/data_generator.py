@@ -1,7 +1,6 @@
 import sys
 import os
-# import urllib.request   ## python 3
-from urllib import urlretrieve  ## python 2
+from urllib import urlretrieve 
 import tarfile
 import zipfile
 from preprocess import cifar_preprocess, svhn_preprocess, mura_preprocess
@@ -20,7 +19,7 @@ def data_normalization(train_data_raw, test_data_raw, normalize_type):
         return train_data_raw, test_data_raw
 
 
-def load_data(data_type, normalize_type):
+def load_data():
     data_path = "MURA-v1.1"
     train_data_raw, train_labels, test_data_raw, test_labels = mura_preprocess(data_path)
     normalize_type = 'divide-255'
