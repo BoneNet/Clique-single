@@ -46,8 +46,6 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', default="0")
-    parser.add_argument('--dataset',
-                        choices=['cifar-10', 'cifar-100', 'svhn', 'mura'])
     parser.add_argument('--k', type=int,
                         help='filters per layer')
     parser.add_argument('--T', type=int,
@@ -65,13 +63,7 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu_options = tf.GPUOptions(allow_growth=True)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-    dataset = args.dataset
-
-    if dataset == 'svhn':
-        total_epoches = 40
-    else:
-        total_epoches = train_params['total_epoch']
-
+    dataset = 'mura'
     result_dir = args.dir
 
     batch_size = train_params['batch_size']
@@ -88,7 +80,7 @@ if __name__ == '__main__':
     label_num = train_label.shape[-1]
 
     graph = tf.Graph()
-    with graph.as_default(), tf.device('/cpu:0'):
+    with graph.as_default():
         input_images = tf.placeholder(tf.float32, [None, image_size[0], image_size[1], image_size[2]],
                                       name='input_images')
         true_labels = tf.placeholder(tf.float32, [None, label_num], name='labels')
@@ -114,11 +106,12 @@ if __name__ == '__main__':
     config.gpu_options.allow_growth = True
 
     with tf.Session(config=config, graph=graph) as sess:
-    sess.run(tf.global_variables_initializer())
-    ###   load from meta graph (optional)###
-    # with tf.Session() as sess:
-    #     new_saver = tf.train.import_meta_graph('save/mura_epoch_40.ckpt.meta')
-    #     new_saver.restore(sess, tf.train.lastest_checkpoint('save'))
+        ### start without loading meta graph
+        # sess.run(tf.global_variables_initializer())
+        ###   load from meta graph (optional)###
+        print 'loading mata data'
+        new_saver = tf.train.import_meta_graph('save/mura_epoch_40.ckpt.meta')
+        new_saver.restore(sess, tf.train.latest_checkpoint('save'))
         count_params()
         ###   train batch data   ###
 
