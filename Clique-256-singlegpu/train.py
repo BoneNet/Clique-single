@@ -46,8 +46,6 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', default="0")
-    parser.add_argument('--dataset',
-                        choices=['cifar-10', 'cifar-100', 'svhn', 'mura'])
     parser.add_argument('--k', type=int,
                         help='filters per layer')
     parser.add_argument('--T', type=int,
@@ -65,13 +63,7 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu
     gpu_options = tf.GPUOptions(allow_growth=True)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-    dataset = args.dataset
-
-    if dataset == 'svhn':
-        total_epoches = 40
-    else:
-        total_epoches = train_params['total_epoch']
-
+    dataset = 'mura'
     result_dir = args.dir
 
     batch_size = train_params['batch_size']
