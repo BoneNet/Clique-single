@@ -1,4 +1,4 @@
-# BoneNet
+# Clique-single
 NN used to solve MURA dataset, Clique-single allocates a single gpu using CliqueNet. Further tuning is required. 
 ## Usage
 - Dowload and unzip MURA dataset
