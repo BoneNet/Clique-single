@@ -98,7 +98,7 @@ if __name__ == '__main__':
         ###     optimizer
         optimizer = tf.train.MomentumOptimizer(learning_rate, 0.9, use_nesterov=True)
         train_op = optimizer.minimize(loss_cross_entropy + l2_loss * weight_decay)
-        saver = tf.train.Saver()
+        saver = tf.train.Saver(sharded=True)
 
     ###     begin training     ###
 
