@@ -20,4 +20,4 @@ Title = {MURA Dataset: Towards Radiologist-Level Abnormality Detection in Muscul
 Year = {2017},
 Eprint = {arXiv:1712.06957},}
 ```
-Thanks [mingfengwan](https://github.com/mingfengwan) for the helping the project and thanks [iboing](https://github.com/iboing) for providing the sample code. 
+Thanks [iboing](https://github.com/iboing) for providing the sample code. 
