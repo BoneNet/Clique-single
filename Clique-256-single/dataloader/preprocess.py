@@ -26,7 +26,7 @@ def mura_preprocess(train_path):
     valid_data_list = []
     valid_labels = []
 
-    for i in range(len(train_img_paths)/100):
+    for i in range(len(train_img_paths)):
         patient_dir = os.path.join("dataloader", train_img_paths[i])
         msg = "\r Loading: %s (%d/%d)    " % (patient_dir, i + 1, len(train_img_paths))
         sys.stdout.write(msg)
@@ -34,15 +34,9 @@ def mura_preprocess(train_path):
         for f in glob.glob(patient_dir + "*"):
             train_data_patient = []
             train_img = png.read_png_int(f)
-            if train_img.shape != (512, 512):
-                if len(train_img.shape) > 2:
-                    train_img = train_img[:, :, 1]
-                l, w = train_img.shape
-                train_img = np.pad(train_img, [((512 - l) / 2, 512 / 2 - l / 2), ((512 - w) / 2, 512 / 2 - w / 2)],
-                                   'constant', constant_values=0)
-            train_img = imresize(train_img, (256, 256))
+            train_img = imresize(train_img, (128, 128))
+            train_img = train_img[:,:,np.newaxis]
             # you can replace 256 with other number but any number greater then 256 will exceed the memory limit of 12GB
-            train_img = np.stack((train_img,) * 3, -1)
             train_data_patient.append(train_img)
         train_data_list.extend(train_data_patient)
         for _ in range(len(train_data_patient)):
@@ -51,7 +45,7 @@ def mura_preprocess(train_path):
             train_labels.append(lst)
     train_data = np.asarray(train_data_list)
 
-    for i in range(len(valid_img_paths)/10):
+    for i in range(len(valid_img_paths)):
         patient_dir = os.path.join("dataloader", valid_img_paths[i])
         msg = "\r Loading: %s (%d/%d)     " % (patient_dir, i + 1, len(valid_img_paths))
         sys.stdout.write(msg)
@@ -59,14 +53,8 @@ def mura_preprocess(train_path):
         for f in glob.glob(patient_dir + "*"):
             valid_data_patient = []
             valid_img = png.read_png_int(f)
-            if train_img.shape != (512, 512):
-                if len(valid_img.shape) > 2:
-                    valid_img = valid_img[:, :, 1]
-                l, w = valid_img.shape
-                valid_img = np.pad(valid_img, [((512 - l) / 2, 512 / 2 - l / 2), ((512 - w) / 2, 512 / 2 - w / 2)],
-                                       'constant', constant_values=0)
-            valid_img = imresize(valid_img, (256, 256))
-            valid_img = np.stack((valid_img,) * 3, -1)
+            valid_img = imresize(valid_img, (128, 128))
+            valid_img = valid_img[:,:,np.newaxis]
             valid_data_patient.append(valid_img)
         valid_data_list.extend(valid_data_patient)
         for _ in range(len(valid_data_patient)):

@@ -75,7 +75,7 @@ def global_pool(input_layer, is_train):
     return tf.nn.avg_pool(output_layer, [1, map_size, map_size, 1], [1, map_size, map_size, 1], 'VALID')
 
 def first_transit(input_layer, channels, strides, with_biase=False):
-    filters=conv_var(kernel_size=(3,3), in_channels=3, out_channels=channels, init_method='msra', name='first_tran')
+    filters=conv_var(kernel_size=(3,3), in_channels=1, out_channels=channels, init_method='msra', name='first_tran')
     conved=tf.nn.conv2d(input_layer, filters, [1, strides, strides, 1], padding='SAME')
     if with_biase==True:
         biases=bias_var(out_channels=channels)

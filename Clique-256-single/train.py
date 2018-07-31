@@ -40,7 +40,7 @@ if __name__ == '__main__':
                     'initial_lr': 0.1,
                     'weight_decay': 1e-4,
                     'batch_size': 10,
-                    'total_epoch': 300,
+                    'total_epoch': 40,
                     'keep_prob': 0.8
                     }
 
@@ -81,8 +81,7 @@ if __name__ == '__main__':
 
     graph = tf.Graph()
     with graph.as_default():
-        input_images = tf.placeholder(tf.float32, [None, image_size[0], image_size[1], image_size[2]],
-                                      name='input_images')
+        input_images = tf.placeholder(tf.float32, [None, image_size[0], image_size[1], 1], name='input_images')
         true_labels = tf.placeholder(tf.float32, [None, label_num], name='labels')
         is_train = tf.placeholder(tf.bool, shape=[])
         learning_rate = tf.placeholder(tf.float32, shape=[], name='learning_rate')
